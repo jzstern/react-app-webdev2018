@@ -23,17 +23,14 @@ class PageUpdate extends React.Component {
 			id: ''
 		}
 
-		this.updatePage = this.updatePage.bind(this);
+		this.updatePage = this.updatePage.bind(this)
 	}
 
 	componentDidMount() {
-		this.updatePage
-		(this.props.match.params.id);
+		this.updatePage(this.props.courseId)
 	}
-	componentWillReceiveProps(newProps)
-	{
-		this.updatePage
-		(newProps.match.params.id);
+	componentWillReceiveProps(newProps) {
+		this.updatePage(newProps.courseId)
 	}
 
 	updatePage(id) {
