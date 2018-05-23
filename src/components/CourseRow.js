@@ -11,6 +11,11 @@ class CourseRow extends React.Component {
 				<td>
 					<Link to={`/course/${this.props.course.id}`}>{this.props.course.title}</Link>
 				</td>
+				<td>
+					<button onClick={() => {this.props.delete(this.props.course.id)}}
+					        type="button"
+					        className="btn btn-block btn-danger">Delete</button>
+				</td>
 			</tr>
 		)
 	}

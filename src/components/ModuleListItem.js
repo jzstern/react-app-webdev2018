@@ -9,7 +9,7 @@ export default class ModuleListItem
 		return (
 			<li className="list-group-item">
 				{this.props.title}
-				<span class="float-right">
+				<span className="float-right">
 					<i className="fa fa-trash"></i>
 					<i className="fa fa-pencil"></i>
 				</span>
