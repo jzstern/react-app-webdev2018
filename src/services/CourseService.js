@@ -1,6 +1,5 @@
 let _singleton = Symbol()
 const COURSE_API_URL = 'http://localhost:8080/api/course'
-// const COURSE_API_URL = 'https://stern-webdev-2018.herokuapp.com/api/course';
 
 class CourseService {
 	constructor(singletonToken) {
@@ -16,29 +15,50 @@ class CourseService {
 
 	findAllCourses() {
 		return fetch(COURSE_API_URL)
-			.then(function (response) {
+			.then(function(response) {
 				return response.json()
-			});
+			})
+	}
+
+	findCourseById(courseId) {
+		return fetch(COURSE_API_URL + '/' + courseId)
+			.then(function(response) {
+				return response.json()
+			})
+	}
+
+	updateCourse(course) {
+		return fetch(COURSE_API_URL + '/' + course.courseId, {
+			method: 'PUT',
+			body: JSON.stringify(course),
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(function(response) {
+				return response.json()
+			})
 	}
 
 	createCourse(course) {
 		return fetch(COURSE_API_URL, {
 			body: JSON.stringify(course),
 			headers: {
-				'Content-Type': 'application/json'
+				'content-type': 'application/json'
 			},
 			method: 'POST'
-		}).then(function (response) {
-			return response.json()
-		});
+		})
+			.then(function (response) {
+				return response.json()
+		})
 	}
 
 	deleteCourse(courseId) {
 		return fetch(COURSE_API_URL + '/' + courseId, {
-			method: 'delete'
+			method: 'DELETE'
 		})
 			.then(function(response) {
-				return response;
+				return response
 			})
 	}
 }

@@ -27,21 +27,25 @@ class CourseList extends React.Component {
 	}
 
 	titleChanged(event) {
-		this.setState({
-			course: {
-				title: event.target.value
-			}
+		this.setState({course: {title: event.target.value, owner: 'Me'}
 		})
 	}
 
 	createCourse() {
-		this.courseService.createCourse(this.state.course)
-			.then(this.findAllCourses())
+		if (this.state.course.title === "") {
+			window.alert("Please enter a title for your course")
+		} else {
+			this.courseService.createCourse(this.state.course)
+				.then(() => {
+					this.findAllCourses()
+					this.setState({course: {title: '', owner: ''}})
+				})
+		}
 	}
 
 	deleteCourse(courseId) {
-		console.log('delete course: ' + courseId)
 		this.courseService.deleteCourse(courseId)
+		this.findAllCourses()
 	}
 
 	renderCourseRows() {
@@ -53,9 +57,7 @@ class CourseList extends React.Component {
 				}
 			)
 		}
-		return (
-			courses
-		)
+		return (courses)
 	}
 
 	render() {
@@ -65,8 +67,13 @@ class CourseList extends React.Component {
 					<thead>
 						<tr>
 							<th>Title</th>
+							<th>Owner</th>
+							<th>Date Created</th>
+							<th>Modified</th>
 						</tr>
-						<tr>
+					</thead>
+					<thead>
+						<tr className="row">
 							<th>
 								<input
 									onChange={this.titleChanged}
@@ -79,8 +86,9 @@ class CourseList extends React.Component {
 							</th>
 						</tr>
 					</thead>
-
-					<tbody>{this.renderCourseRows()}</tbody>
+					<tbody>
+						{this.renderCourseRows()}
+					</tbody>
 				</table>
 			</div>
 		)
