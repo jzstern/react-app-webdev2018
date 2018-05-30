@@ -24,8 +24,10 @@ class LessonTabs
 	componentDidMount() {
 		console.log('moduleId from componentDidMount(): ' + this.props.match.params.moduleId)
 		console.log('moduleId (props) from componentDidMount(): ' + this.props.moduleId)
-		console.log('this.props from componentDidMount(): ' + JSON.stringify(this.props))
+		// console.log('this.props from componentDidMount(): ' + JSON.stringify(this.props))
 		this.moduleChanged(this.props.match.params.moduleId)
+		console.log('moduleId after moduleChanged: ' + this.state.moduleId)
+
 		this.findAllLessons()
 		this.renderLessonTabs()
 	}
@@ -33,6 +35,9 @@ class LessonTabs
 	componentWillReceiveProps(newProps) {
 		// this.moduleChanged(newProps.match.params.moduleId)
 		// might need to add something when child state changes (e.g. show a different lesson)
+		console.log('moduleId in componentWillReceiveProps: ' + this.state.moduleId)
+		this.findAllLessons()
+		this.renderLessonTabs()
 	}
 
 	renderLessonTabs() {
@@ -55,7 +60,7 @@ class LessonTabs
 		console.log('moduleId from findAllLessons(): ' + this.state.moduleId)
 		this.lessonService.findAllLessonsForModule(this.state.moduleId, this.props.match.params.courseId)
 			.then((lessons) => {
-				console.log('lessons returned from findAllLessons(): ' + lessons)
+				console.log('lessons returned from findAllLessons(): ' + JSON.stringify(lessons))
 				this.setState({lessons: lessons})
 			})
 	}
@@ -72,7 +77,10 @@ class LessonTabs
 	}
 
 	moduleChanged(moduleId) {
-		this.setState({moduleId: moduleId})
+		console.log('moduleId arg: ' + moduleId)
+		this.setState(() => {
+			return {moduleId: moduleId}
+		})
 		console.log('moduleId from moduleChanged: ' + this.state.moduleId)
 	}
 

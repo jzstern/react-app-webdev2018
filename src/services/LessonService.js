@@ -1,5 +1,5 @@
 const LESSON_API_URL = 'http://localhost:8080/api/lesson'
-const ALT_LESSON_API_URL = 'http://localhost8080:/api/course/CID/module/MID/lesson'
+const ALT_LESSON_API_URL = 'http://localhost:8080/api/course/CID/module/MID/lesson'
 
 let _singleton = Symbol()
 
