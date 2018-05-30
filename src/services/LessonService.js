@@ -15,6 +15,19 @@ class LessonService {
 		return this[_singleton]
 	}
 
+	updateLesson(lessonId, lesson) {
+		return fetch(LESSON_API_URL + '/' + lessonId, {
+			body: JSON.stringify(lesson),
+			headers: {
+				'content-type': 'application/json'
+			},
+			method: 'PUT'
+		})
+			.then(function (response) {
+				return response.json();
+			})
+	}
+
 	findAllLessons() {
 		return fetch(LESSON_API_URL)
 			.then(function (response) {
@@ -52,7 +65,7 @@ class LessonService {
 
 	deleteLesson(lessonId) {
 		return fetch(LESSON_API_URL + '/' + lessonId, {
-			method: 'delete'
+			method: 'DELETE'
 		})
 	}
 }

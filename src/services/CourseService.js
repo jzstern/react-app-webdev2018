@@ -29,11 +29,11 @@ class CourseService {
 
 	updateCourse(course) {
 		return fetch(COURSE_API_URL + '/' + course.courseId, {
-			method: 'PUT',
 			body: JSON.stringify(course),
 			headers: {
 				'content-type': 'application/json'
-			}
+			},
+			method: 'PUT'
 		})
 			.then(function(response) {
 				return response.json()

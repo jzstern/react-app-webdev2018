@@ -50,9 +50,9 @@ class ModuleService {
 
 	updateModule(module) {
 		return fetch(ALT_MODULE_API_URL + module.moduleId, {
-			method: 'PUT',
 			body: JSON.stringify(module),
-			headers: {'content-type': 'application/json'}
+			headers: {'content-type': 'application/json'},
+			method: 'PUT'
 		})
 			.then(function (response) {
 				return response.json()
