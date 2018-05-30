@@ -22,22 +22,23 @@ class LessonTabs
 	}
 
 	componentDidMount() {
-		console.log('moduleId from componentDidMount(): ' + this.props.match.params.moduleId)
-		console.log('moduleId (props) from componentDidMount(): ' + this.props.moduleId)
+		// console.log('moduleId from componentDidMount(): ' + this.props.match.params.moduleId)
+		// console.log('moduleId (props) from componentDidMount(): ' + this.props.moduleId)
 		// console.log('this.props from componentDidMount(): ' + JSON.stringify(this.props))
 		this.moduleChanged(this.props.match.params.moduleId)
-		console.log('moduleId after moduleChanged: ' + this.state.moduleId)
+		// console.log('moduleId after moduleChanged: ' + this.state.moduleId)
 
-		this.findAllLessons()
-		this.renderLessonTabs()
+		// this.findAllLessons()
+		// this.renderLessonTabs()
 	}
 
 	componentWillReceiveProps(newProps) {
-		// this.moduleChanged(newProps.match.params.moduleId)
+		this.moduleChanged(newProps.match.params.moduleId)
 		// might need to add something when child state changes (e.g. show a different lesson)
-		console.log('moduleId in componentWillReceiveProps: ' + this.state.moduleId)
-		this.findAllLessons()
-		this.renderLessonTabs()
+
+		// console.log('moduleId in componentWillReceiveProps: ' + this.state.moduleId)
+		// this.findAllLessons()
+		// this.renderLessonTabs()
 	}
 
 	renderLessonTabs() {
@@ -47,20 +48,18 @@ class LessonTabs
 			lessons = this.state.lessons.map((lesson) => {
 				return <Lesson title={lesson.title}
 				               key={lesson.id}
-					// delete={this.deleteModule}
 					             moduleId={this.state.moduleId}
 					             courseId={this.state.courseId}/>
 			})
 		}
-		console.log(lessons)
 		return lessons
 	}
 
 	findAllLessons() {
-		console.log('moduleId from findAllLessons(): ' + this.state.moduleId)
+		// console.log('moduleId from findAllLessons(): ' + this.state.moduleId)
 		this.lessonService.findAllLessonsForModule(this.state.moduleId, this.props.match.params.courseId)
 			.then((lessons) => {
-				console.log('lessons returned from findAllLessons(): ' + JSON.stringify(lessons))
+				// console.log('lessons returned from findAllLessons(): ' + JSON.stringify(lessons))
 				this.setState({lessons: lessons})
 			})
 	}
@@ -77,11 +76,11 @@ class LessonTabs
 	}
 
 	moduleChanged(moduleId) {
-		console.log('moduleId arg: ' + moduleId)
-		this.setState(() => {
-			return {moduleId: moduleId}
-		})
-		console.log('moduleId from moduleChanged: ' + this.state.moduleId)
+		// console.log('moduleId arg: ' + moduleId)
+
+		this.setState({moduleId: moduleId}, () => this.findAllLessons())
+
+		// console.log('moduleId from moduleChanged: ' + this.state.moduleId)
 	}
 
 
@@ -96,7 +95,7 @@ class LessonTabs
 					{/*<a className="nav-link" href="#">Another Tab</a>*/}
 				{/*</li>*/}
 			</ul>
-			{/*{this.renderTabs()}*/}
+			{this.renderLessonTabs()}
 			<input onChange={this.titleChanged}
 			       value={this.state.lesson.title}
 			       className="form-control"
