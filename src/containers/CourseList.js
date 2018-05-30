@@ -64,7 +64,7 @@ class CourseList extends React.Component {
 		return (
 			<div className="card-deck">
 				<table className="table">
-					<thead>
+					<thead className="card-header table-row">
 						<tr>
 							<th>Title</th>
 							<th>Owner</th>
@@ -86,7 +86,7 @@ class CourseList extends React.Component {
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody className="card-body">
 						{this.renderCourseRows()}
 					</tbody>
 				</table>

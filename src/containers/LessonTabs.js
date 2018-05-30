@@ -1,5 +1,6 @@
 import React from 'react'
 import LessonService from "../services/LessonService"
+import Lesson from '../components/LessonTabItem'
 
 class LessonTabs
 	extends React.Component {
@@ -12,17 +13,51 @@ class LessonTabs
 			lessons: []
 		}
 
+		this.moduleChanged = this.moduleChanged.bind(this)
 		this.createLesson = this.createLesson.bind(this)
 		this.titleChanged = this.titleChanged.bind(this)
+		this.findAllLessons = this.findAllLessons.bind(this)
+		this.renderLessonTabs = this.renderLessonTabs.bind(this)
 		this.lessonService = LessonService.instance
 	}
 
 	componentDidMount() {
-		this.moduleChanged(this.props.moduleId)
+		console.log('moduleId from componentDidMount(): ' + this.props.match.params.moduleId)
+		console.log('moduleId (props) from componentDidMount(): ' + this.props.moduleId)
+		console.log('this.props from componentDidMount(): ' + JSON.stringify(this.props))
+		this.moduleChanged(this.props.match.params.moduleId)
+		this.findAllLessons()
+		this.renderLessonTabs()
 	}
 
 	componentWillReceiveProps(newProps) {
-		this.moduleChanged(newProps.match.params.moduleId)
+		// this.moduleChanged(newProps.match.params.moduleId)
+		// might need to add something when child state changes (e.g. show a different lesson)
+	}
+
+	renderLessonTabs() {
+		let lessons = null
+
+		if (this.state) {
+			lessons = this.state.lessons.map((lesson) => {
+				return <Lesson title={lesson.title}
+				               key={lesson.id}
+					// delete={this.deleteModule}
+					             moduleId={this.state.moduleId}
+					             courseId={this.state.courseId}/>
+			})
+		}
+		console.log(lessons)
+		return lessons
+	}
+
+	findAllLessons() {
+		console.log('moduleId from findAllLessons(): ' + this.state.moduleId)
+		this.lessonService.findAllLessonsForModule(this.state.moduleId, this.props.match.params.courseId)
+			.then((lessons) => {
+				console.log('lessons returned from findAllLessons(): ' + lessons)
+				this.setState({lessons: lessons})
+			})
 	}
 
 	createLesson() {
@@ -38,12 +73,21 @@ class LessonTabs
 
 	moduleChanged(moduleId) {
 		this.setState({moduleId: moduleId})
+		console.log('moduleId from moduleChanged: ' + this.state.moduleId)
 	}
 
 
 	render() { return(
 		<div>
 			<h2>Lessons</h2>
+			<ul className="nav nav-tabs">
+				<li className="nav-item">
+					<a className="nav-link active" href="#">Active Tab</a>
+				</li>
+				{/*<li className="nav-item">*/}
+					{/*<a className="nav-link" href="#">Another Tab</a>*/}
+				{/*</li>*/}
+			</ul>
 			{/*{this.renderTabs()}*/}
 			<input onChange={this.titleChanged}
 			       value={this.state.lesson.title}
@@ -52,14 +96,6 @@ class LessonTabs
 			<button className="btn btn-block btn-primary" onClick={this.createLesson} type="button">
 				<i className="fa fa-plus"></i>
 			</button>
-			{/*<ul className="nav nav-tabs">*/}
-				{/*<li className="nav-item">*/}
-					{/*<a className="nav-link active" href="#">Active Tab</a>*/}
-				{/*</li>*/}
-				{/*<li className="nav-item">*/}
-					{/*<a className="nav-link" href="#">Another Tab</a>*/}
-				{/*</li>*/}
-			{/*</ul>*/}
 		</div>
 	)}
 }

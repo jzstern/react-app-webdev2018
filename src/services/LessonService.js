@@ -15,6 +15,22 @@ class LessonService {
 		return this[_singleton]
 	}
 
+	findAllLessons() {
+		return fetch(LESSON_API_URL)
+			.then(function (response) {
+				return response.json()
+			})
+	}
+
+	findAllLessonsForModule(moduleId, courseId) {
+		return fetch(ALT_LESSON_API_URL
+			.replace('CID', courseId)
+			.replace('MID', moduleId))
+			.then(function (response) {
+				return response.json()
+			})
+	}
+
 	findLessonById(lessonId) {
 		return fetch(LESSON_API_URL + '/' + lessonId)
 			.then(function (response) {
@@ -32,6 +48,12 @@ class LessonService {
 			.then(function (response) {
 				return response.json()
 			})
+	}
+
+	deleteLesson(lessonId) {
+		return fetch(LESSON_API_URL + '/' + lessonId, {
+			method: 'delete'
+		})
 	}
 }
 

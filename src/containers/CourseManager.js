@@ -8,8 +8,8 @@ export default class CourseManager
 	render() {
 		return (
 			<Router>
-				<div className="container-fluid">
-					<h1>Course Manager</h1>
+				<div className="container-fluid card card-header">
+					<h1 className="card-title">Course Manager</h1>
 
 					<Route path="/courses" component={CourseList}></Route>
 					<Route path="/course/:courseId" component={CourseEditor}></Route>
