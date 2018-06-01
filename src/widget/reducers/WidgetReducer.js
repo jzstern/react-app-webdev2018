@@ -1,5 +1,5 @@
 import React from 'react'
-import * as constants from "../constants/index"
+import * as constants from "../constants"
 
 export const widgetReducer = (state = {widgets: [], preview: false}, action) => {
 	let newState, fixed
@@ -38,7 +38,9 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
 			})
 
 			console.log(fixed)
-			return fixed
+			return {
+				widgets: fixed
+			}
 
 		case constants.SHIFT_WIDGET_DOWN:
 			fixed = widgetList.map(widget => {
@@ -51,9 +53,10 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
 				}
 				return Object.assign({}, widget);
 			})
-
-			console.log(fixed)
-			return fixed
+			
+			return {
+				widgets: fixed
+			}
 
 		case constants.LINK_TEXT_CHANGED:
 			return {
@@ -244,6 +247,10 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
 			return newState
 
 		default:
-			return state
+			return {
+				widgets: state.widgets.sort(function(w1, w2) {
+					return (+w1.position || 0) - (+w2.position || 0)
+				})
+			}
 	}
 }

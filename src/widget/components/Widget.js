@@ -304,7 +304,7 @@ const ListContainer = connect(stateToPropsMapper, listDispatchToPropsMapper)(Lis
 //                                        WIDGET
 // -------------------------------------------------------------------------------------------------
 
-const Widget = ({widget, preview, shiftUp, shiftDown, selectWidget, deleteWidget}) => {
+const Widget = ({widget, shiftUp, shiftDown, selectWidget, deleteWidget}) => {
 	let selectElement
 
 	return (
