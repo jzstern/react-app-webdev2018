@@ -48,4 +48,4 @@ const dispatchToPropsMapper = dispatch => ({
 	preview: () => actions.preview(dispatch)
 })
 
-export const App = connect(stateToPropertiesMapper, dispatchToPropsMapper)(WidgetList)
+export const WidgetApp = connect(stateToPropertiesMapper, dispatchToPropsMapper)(WidgetList)

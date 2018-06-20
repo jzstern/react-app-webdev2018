@@ -4,7 +4,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 import {widgetReducer} from "../widget/reducers/WidgetReducer";
-import {App} from '../widget/containers/WidgetList'
+import {WidgetApp} from '../widget/containers/WidgetList'
 
 let store = createStore(widgetReducer)
 
@@ -29,6 +29,7 @@ class LessonTabItem
 	render() { return (
 		<div>
 			<div className="btn-group-vertical">
+			{/*<div>*/}
 				<li className="nav-item list-group-item">
 					<Link to={`/course/${this.props.courseId}/module/${this.props.moduleId}/widgets`} className="nav-link">
 						{this.props.title}
@@ -44,11 +45,17 @@ class LessonTabItem
 				</li>
 			</div>
 
+			{/*put this provider outside of of the list of tabs*/}
+			{/*put this provider outside of of the list of tabs*/}
+			{/*put this provider outside of of the list of tabs*/}
 			<div>
 				<Provider store={store}>
-					<App/>
-				</Provider>,
+					<WidgetApp/>
+				</Provider>
 			</div>
+			{/*put this provider outside of of the list of tabs*/}
+			{/*put this provider outside of of the list of tabs*/}
+			{/*put this provider outside of of the list of tabs*/}
 		</div>
 	)}
 }
